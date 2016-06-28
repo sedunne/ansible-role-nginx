@@ -1,0 +1,6 @@
+# {{ ansible_managed }}
+server {
+{% for line in item.value.config %}
+  {{ line }};
+{% endfor %}
+}

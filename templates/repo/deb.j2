@@ -1,0 +1,3 @@
+# {{ ansible_managed }}
+deb http://nginx.org/packages/{% if nginx_repo_branch == 'mainline' %}mainline/{% endif %}{{ ansible_distribution|lc }}/ {{ ansible_distribution_release|lc }} nginx
+deb-src http://nginx.org/packages/{% if nginx_repo_branch == 'mainline' %}mainline/{% endif %}{{ ansible_distribution|lc }}/ {{ansible_distribution_release|lc }} nginx

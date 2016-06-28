@@ -1,0 +1,6 @@
+---
+- include: install.yml
+- include: configure.yml
+- include: ssl.yml
+  when: nginx_use_ssl == 'true'
+

@@ -1,0 +1,22 @@
+##
+# {{ ansible_managed }}
+##
+
+user {{ nginx_user }};
+worker_processes {{ nginx_worker_processes }};
+pid {{ nginx_pid_file }};
+
+events {
+{% for event in nginx_conf_events %}
+        {{ event }};
+{% endfor %}
+}
+
+http {
+	include {{ nginx_conf_dir}}/{{ nginx_mime_types }};
+        include {{ nginx_conf_dir }}/conf.d/*.conf;
+        include {{ nginx_conf_dir }}/{{ nginx_enabled_sites }}/*;
+{% for http in nginx_conf_http %}
+        {{ http }};
+{% endfor %}
+}

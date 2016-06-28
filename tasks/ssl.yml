@@ -1,0 +1,9 @@
+---
+-name: create ssl directory
+  file:
+   path: "{{ nginx_conf_dir }}/ssl/"
+   state: directory
+   mode: 0700
+   owner: "{{ nginx_user }}"
+   group: "{{ nginx_user }}"
+

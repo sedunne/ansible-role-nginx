@@ -1,0 +1,32 @@
+---
+- name: copy nginx conf
+  template:
+    src: nginx.conf.j2
+    dest: /etc/nginx/nginx.conf
+    owner: root
+    group: root
+    mode: 0644
+
+- name: copy php-fpm upstream conf
+  copy:
+   src: php-fpm.conf
+   dest: "{{ nginx_conf_dir }}/conf.d/php-fpm.conf"
+
+- name: copy site configurations
+  copy:
+    src: "{{ item }}"
+    dest: "{{ nginx_conf_dir }}/sites-available/{{ item }}"
+  with_items: nginx_sites
+
+- name: enabling provided sites
+  file:
+    state: link
+    src: "{{ nginx_conf_dir }}/sites-available/{{ item }}"
+    dest: "{{ nginx_conf_dir }}/sites-enabled/{{ item }}"
+  with_items: nginx_sites | difference(nginx_disabled_sites)
+
+- name: disabling provided sites
+  file:
+    state: absent
+    dest: "{{ nginx_conf_dir }}/sites-enabled/{{ item }}"
+  with_items: nginx_disabled_sites

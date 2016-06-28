@@ -1,0 +1,26 @@
+---
+- name: add Nginx repository (debian)
+  template:
+    src: repo/deb.j2
+    dest: "/etc/apt/sources.list.d/nginx_{{ nginx_repo_branch }}"
+  when: "{{ ansible_os_family == Debian }} and {{ nginx_manage_repo == True }}"
+  tags:
+    - nginx
+    - nginx_install
+
+- name: add Nginx repository (rhel)
+  template:
+    src: repo/rhel.j2
+    dest: "/etc/yum.repos.d/nginx_{{ nginx_repo_branch }}"
+  when: "{{ ansible_os_family == RedHat }} and {{ nginx_manage_repo == True }}"
+  tags:
+    - nginx
+    - nginx_install
+
+- name: install nginx package
+  pkg:
+    state: "{{ nginx_package_state }}"
+    name: "{{ nginx_package_name }}"
+  tags:
+    - nginx
+    - nginx_install
