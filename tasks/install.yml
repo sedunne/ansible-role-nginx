@@ -11,7 +11,7 @@
 - name: add Nginx repository (rhel)
   template:
     src: repo/rhel.j2
-    dest: "/etc/yum.repos.d/nginx_{{ nginx_repo_branch }}"
+    dest: "/etc/yum.repos.d/nginx_{{ nginx_repo_branch }}.repo"
   when: "{{ ansible_os_family == 'RedHat' }} and {{ nginx_manage_repo == True }}"
   tags:
     - nginx
