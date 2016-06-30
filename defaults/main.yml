@@ -5,31 +5,18 @@ nginx_manage_repo: true
 nginx_repo_branch: 'stable'
 nginx_repo_rhel_enabled: '1'
 
-nginx_user: "www-data"
-nginx_worker_processes: "4"
+nginx_deb_user: 'www-data'
+nginx_rhel_user: 'nginx'
+nginx_worker_processes: "auto"
 nginx_pid_file: "/run/nginx.pid"
-nginx_access_log: "/var/log/nginx/access.log"
-nginx_error_log: "/var/log/nginx/error.log"
-nginx_mime_types: "mime.types"
 nginx_conf_dir: "/etc/nginx"
-nginx_enabled_sites: "sites-enabled"
-nginx_use_ssl: false
-
-nginx_conf_events:
-  - worker_connections "768"
-
-nginx_conf_http:
-  - sendfile "on"
-  - tcp_nopush "on"
-  - tcp_nodelay "on"
-  - keepalive_timeout "65"
-  - types_hash_max_size "2048"
-  - default_type "application/octet-stream"
-  - access_log "{{ nginx_access_log }}"
-  - error_log "{{ nginx_error_log }}"
-  - gzip "on"
-  - gzip_disable "msie6"
 
 nginx_sites: []
-
 nginx_disabled_sites: []
+nginx_conf_events: []
+nginx_conf_http: []
+
+nginx_conf_settings:
+  main: []
+  events: []
+  http: []

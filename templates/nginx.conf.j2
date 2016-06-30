@@ -1,22 +1,20 @@
-##
 # {{ ansible_managed }}
-##
-
-user {{ nginx_user }};
+user {% if nginx_user is defined %}{{ nginx_user }}{% elif ansible_os_family == 'Debian' %}{{ nginx_deb_user }}{% else %}{{ nginx_rhel_user }}{% endif %};
 worker_processes {{ nginx_worker_processes }};
 pid {{ nginx_pid_file }};
-
+{% for key, value in nginx_conf_settings["main"].iteritems() %}
+  {{ key }} {{ value }};
+{% endfor %}
 events {
-{% for event in nginx_conf_events %}
-        {{ event }};
+{% for key, value in nginx_conf_settings["events"].iteritems() %}
+  {{ key }} {{ value }};
 {% endfor %}
 }
-
 http {
-	include {{ nginx_conf_dir}}/{{ nginx_mime_types }};
-        include {{ nginx_conf_dir }}/conf.d/*.conf;
-        include {{ nginx_conf_dir }}/{{ nginx_enabled_sites }}/*;
-{% for http in nginx_conf_http %}
-        {{ http }};
+  include {{ nginx_conf_dir}}/mime.types;
+  include {{ nginx_conf_dir }}/conf.d/*.conf;
+  include {{ nginx_conf_dir }}/sites-enabled/*;
+{% for key, value in nginx_conf_settings["http"].iteritems() %}
+  {{ key }} {{ value }};
 {% endfor %}
 }

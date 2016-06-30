@@ -21,6 +21,8 @@
   package:
     state: "{{ nginx_package_state }}"
     name: "{{ nginx_package_name }}"
+  notify:
+    - start nginx
   tags:
     - nginx
     - nginx_install
