@@ -17,6 +17,6 @@ nginx_conf_events: []
 nginx_conf_http: []
 
 nginx_conf_settings:
-  main: []
-  events: []
-  http: []
+  main: {}
+  events: {}
+  http: {}
