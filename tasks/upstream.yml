@@ -1,0 +1,15 @@
+---
+- name: template upstream configs
+  template:
+    dest: "{{ nginx_conf_dir }}/conf.d/{{ item.key }}.conf"
+    src: upstream.j2
+    owner: "{{ nginx_file_owner }}"
+    group: "{{ nginx_file_group }}"
+    mode: "{{ nginx_file_mode }}"
+  with_dict: "{{ nginx_upstreams }}"
+  when: (nginx_upstreams is defined)
+  notify:
+    - restart nginx
+  tags:
+    - nginx
+    - nginx_upstreams

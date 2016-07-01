@@ -7,16 +7,16 @@ nginx_repo_rhel_enabled: '1'
 
 nginx_deb_user: 'www-data'
 nginx_rhel_user: 'nginx'
+nginx_file_owner: 'root'
+nginx_file_group: 'root'
+nginx_file_mode: '0644'
+nginx_dir_mode: '0755'
 nginx_worker_processes: "auto"
 nginx_pid_file: "/run/nginx.pid"
 nginx_conf_dir: "/etc/nginx"
-
-nginx_sites: []
-nginx_disabled_sites: []
-nginx_conf_events: []
-nginx_conf_http: []
 
 nginx_conf_settings:
   main: {}
   events: {}
   http: {}
+nginx_sites: {}

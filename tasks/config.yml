@@ -3,11 +3,44 @@
   template:
     src: nginx.conf.j2
     dest: "{{ nginx_conf_dir }}/nginx.conf"
-    owner: root
-    group: root
-    mode: 0644
+    owner: "{{ nginx_file_owner }}"
+    group: "{{ nginx_file_group }}"
+    mode: "{{ nginx_file_mode }}"
   notify:
     - restart nginx
+  tags:
+    - nginx
+    - nginx_config
+
+- name: ensure conf.d exsists
+  file:
+    state: directory
+    path: "{{ nginx_conf_dir }}/conf.d"
+    owner: "{{ nginx_file_owner }}"
+    group: "{{ nginx_file_group }}"
+    mode: "{{ nginx_dir_mode }}"
+  tags:
+    - nginx
+    - nginx_config
+
+- name: ensure sites-available exsists
+  file:
+    state: directory
+    path: "{{ nginx_conf_dir }}/sites-available"
+    owner: "{{ nginx_file_owner }}"
+    group: "{{ nginx_file_group }}"
+    mode: "{{ nginx_dir_mode }}"
+  tags:
+    - nginx
+    - nginx_config
+
+- name: ensure sites-enabled exsists
+  file:
+    state: directory
+    path: "{{ nginx_conf_dir }}/sites-enabled"
+    owner: "{{ nginx_file_owner }}"
+    group: "{{ nginx_file_group }}"
+    mode: "{{ nginx_dir_mode }}"
   tags:
     - nginx
     - nginx_config
