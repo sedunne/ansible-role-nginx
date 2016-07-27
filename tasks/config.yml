@@ -19,6 +19,8 @@
     owner: "{{ nginx_file_owner }}"
     group: "{{ nginx_file_group }}"
     mode: "{{ nginx_dir_mode }}"
+  notify:
+    - restart nginx
   tags:
     - nginx
     - nginx_config
@@ -30,6 +32,8 @@
     owner: "{{ nginx_file_owner }}"
     group: "{{ nginx_file_group }}"
     mode: "{{ nginx_dir_mode }}"
+  notify:
+    - restart nginx
   tags:
     - nginx
     - nginx_config
@@ -41,6 +45,8 @@
     owner: "{{ nginx_file_owner }}"
     group: "{{ nginx_file_group }}"
     mode: "{{ nginx_dir_mode }}"
+  notify:
+    - restart nginx
   tags:
     - nginx
     - nginx_config
