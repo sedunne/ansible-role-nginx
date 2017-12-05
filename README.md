@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/sedunne/ansible-role-nginx.svg?branch=master)](https://travis-ci.org/sedunne/ansible-role-nginx)
+
 # Ansible Nginx Role
 
 This role can install (optionally from the official repo), and configure Nginx, as well as it's site files (coming soon).  The role tries to not apply any opinioned default settings, though it does take some liberties on location for the configurations.  Configurations are built via YAML dictionaries whenever possible, with the setting and value as the respective key and value.
