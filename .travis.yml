@@ -3,7 +3,6 @@ services: docker
 
 env:
   - distro: centos7
-  - distro: ubuntu1604
 
 script:
   ## Run test script
