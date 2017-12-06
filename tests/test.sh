@@ -12,6 +12,7 @@
 # License: MIT
 # Original from: https://gist.github.com/geerlingguy/73ef1e5ee45d8694570f334be385e181
 # Original work copyright Jeff Geerling
+# Modifications done by Stephen Dunne
 
 # Exit on any individual command failure.
 set -e
@@ -33,42 +34,16 @@ test_idempotence=${test_idempotence:-"true"}
 ## Set up vars for Docker setup.
 # CentOS 7
 if [ $distro = 'centos7' ]; then
-  init="/usr/lib/systemd/systemd"
-  opts="--privileged --volume=/sys/fs/cgroup:/sys/fs/cgroup:ro"
-# CentOS 6
-elif [ $distro = 'centos6' ]; then
-  init="/sbin/init"
-  opts="--privileged"
+  opts="--tmpfs /tmp --tmpfs /run --volume=/sys/fs/cgroup:/sys/fs/cgroup:ro --security-opt seccomp=unconfined"
 # Ubuntu 16.04
 elif [ $distro = 'ubuntu1604' ]; then
-  init="/lib/systemd/systemd"
-  opts="--privileged --volume=/sys/fs/cgroup:/sys/fs/cgroup:ro"
-# Ubuntu 14.04
-elif [ $distro = 'ubuntu1404' ]; then
-  init="/sbin/init"
-  opts="--privileged"
-# Ubuntu 12.04
-elif [ $distro = 'ubuntu1204' ]; then
-  init="/sbin/init"
-  opts="--privileged"
-# Debian 8
-elif [ $distro = 'debian9' ]; then
-  init="/lib/systemd/systemd"
-  opts="--privileged --volume=/sys/fs/cgroup:/sys/fs/cgroup:ro"
-# Debian 8
-elif [ $distro = 'debian8' ]; then
-  init="/lib/systemd/systemd"
-  opts="--privileged --volume=/sys/fs/cgroup:/sys/fs/cgroup:ro"
-# Fedora 24
-elif [ $distro = 'fedora24' ]; then
-  init="/usr/lib/systemd/systemd"
-  opts="--privileged --volume=/sys/fs/cgroup:/sys/fs/cgroup:ro"
+  opts="--tmpfs /tmp --tmpfs /run --tmpfs /run/lock --volume=/sys/fs/cgroup:/sys/fs/cgroup:ro --security-opt seccomp=unconfined"
 fi
 
 # Run the container using the supplied OS.
-printf ${green}"Starting Docker container: sedunne/docker-$distro-ansible."${neutral}"\n"
+printf ${green}"Starting Docker container: sedunne/docker-$distro-ansible"${neutral}"\n"
 docker pull sedunne/docker-$distro-ansible:latest
-docker run --detach --volume="$PWD":/etc/ansible/roles/role_under_test:rw --name $container_id $opts sedunne/docker-$distro-ansible:latest $init
+docker run --detach --volume="$PWD":/etc/ansible/roles/role_under_test:rw --name $container_id $opts sedunne/docker-$distro-ansible:latest
 
 printf "\n"
 
@@ -80,7 +55,7 @@ fi
 
 printf "\n"
 
-# Run Ansible Lint
+## Run Ansible Lint
 printf ${green}"Linting Ansible role/playbook."${neutral}"\n"
 docker exec --tty $container_id env TERM=xterm ansible-lint -v /etc/ansible/roles/role_under_test/
 

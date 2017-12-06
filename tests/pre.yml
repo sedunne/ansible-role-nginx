@@ -1,7 +1,0 @@
----
-- hosts: all
-
-  tasks:
-    - name: Install Ansible Lint
-      pip:
-        name: ansible-lint
