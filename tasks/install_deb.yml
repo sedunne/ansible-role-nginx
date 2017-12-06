@@ -1,0 +1,29 @@
+---
+- name: add Nginx repository (debian)
+  template:
+    src: repo/deb.j2
+    dest: "/etc/apt/sources.list.d/nginx_{{ nginx_repo_branch }}.list"
+  when: nginx_manage_repo == True
+  tags:
+    - nginx
+    - nginx_install
+
+- name: add Nginx signing key
+  apt_key:
+    url: https://nginx.org/packages/keys/nginx_signing.key
+    state: present
+  when: nginx_manage_repo == True
+  tags:
+    - nginx
+    - nginx_install
+
+- name: install nginx package
+  apt:
+    state: "{{ nginx_package_state }}"
+    name: "{{ nginx_package_name }}"
+    update_cache: yes
+  notify:
+    - start nginx
+  tags:
+    - nginx
+    - nginx_install

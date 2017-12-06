@@ -1,4 +1,8 @@
 ---
-- include: install.yml
-- include: config.yml
-- include: upstream.yml
+- include_tasks: install_deb.yml
+  when: ansible_os_family == 'Debian'
+- include_tasks: install_rhel.yml
+  when: ansible_os_family == 'RedHat'
+- import_tasks: config.yml
+- include_tasks: upstream.yml
+  when: nginx_upstreams is defined
