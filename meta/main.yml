@@ -1,0 +1,18 @@
+---
+galaxy_info:
+  author: sedunne
+  description: Nginx deployment for CentOS and Ubuntu
+  license: MIT
+  min_ansible_version: 2.4
+  platforms:
+    - name: EL
+      versions:
+        - 7
+    - name: Ubuntu
+      versions:
+        - xenial
+  galaxy_tags:
+    - web
+    - nginx
+
+dependencies: []

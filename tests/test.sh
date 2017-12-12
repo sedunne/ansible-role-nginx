@@ -47,11 +47,9 @@ docker run --detach --volume="$PWD":/etc/ansible/roles/role_under_test:rw --name
 
 printf "\n"
 
-# Install requirements if `requirements.yml` is present.
-if [ -f "$PWD/tests/requirements.yml" ]; then
-  printf ${green}"Requirements file detected; installing dependencies."${neutral}"\n"
-  docker exec --tty $container_id env TERM=xterm ansible-galaxy install -r /etc/ansible/roles/role_under_test/tests/requirements.yml
-fi
+printf ${green}"Installing dependencies if needed..."${neutral}"\n"
+docker exec --tty $container_id env TERM=xterm /bin/bash -c 'cd /etc/ansible/roles/role_under_test/; python tests/deps.py'
+docker exec --tty $container_id env TERM=xterm /bin/bash -c 'if [ -e /etc/ansible/roles/role_under_test/tests/requirements.yml ]; then ansible-galaxy install -r /etc/ansible/roles/role_under_test/tests/requirements.yml; fi'
 
 printf "\n"
 
