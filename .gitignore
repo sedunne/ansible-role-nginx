@@ -1,1 +1,5 @@
 tests/*.retry
+.vagrant/
+vendor/
+.bundle/
+Gemfile.lock
