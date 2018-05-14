@@ -24,7 +24,7 @@ pipeline {
         ANSIBLE_ROLES_PATH = 'tests/roles'
       }
       steps {
-        sh 'ansible-playbook tests/test.yml'
+        sh 'ansible-playbook tests/jenkins.yml'
       }
     }
   }
