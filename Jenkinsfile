@@ -9,7 +9,8 @@ pipeline {
   stages {
     stage('Prep') {
       steps {
-        sh 'python tests/deps.py; if [ -e tests/requirements.yml ]; then ansible-galaxy install -r tests/requirements.yml; fi'
+        sh 'python tests/deps.py'
+        sh '/bin/bash -c "if [ -e tests/requirements.yml ]; then ansible-galaxy install -r tests/requirements.yml; fi"'
       }
     }
     stage('Verify') {
