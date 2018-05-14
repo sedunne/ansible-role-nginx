@@ -4,7 +4,7 @@ pipeline {
     stage('Test') {
       steps {
         dir(path: '$WORKSPACE') {
-          sh '/bin/bash test/test.sh'
+          sh '/bin/bash tests/test.sh'
         }
 
       }
