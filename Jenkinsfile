@@ -10,7 +10,7 @@ pipeline {
     stage('Prep') {
       steps {
         sh 'python tests/deps.py'
-        sh '/bin/bash -c "if [ -e tests/requirements.yml ]; then ansible-galaxy install -r tests/requirements.yml; fi"'
+        sh '/bin/bash -c "if [ -e tests/requirements.yml ]; then ansible-galaxy install -r tests/requirements.yml -p tests/roles; fi"'
       }
     }
     stage('Lint') {
@@ -19,6 +19,10 @@ pipeline {
       }
     }
     stage('Run') {
+      agent any
+      environment {
+        ANSIBLE_ROLES_PATH = 'tests/roles'
+      }
       steps {
         sh 'ansible-playbook tests/test.yml'
       }
