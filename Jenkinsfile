@@ -1,9 +1,9 @@
 pipeline {
   agent any
   stages {
-    stage('Init') {
+    stage('Test') {
       steps {
-        sh 'tests/test.sh'
+        sh 'cd $WORKSPACE && /bin/bash tests/test.sh'
       }
     }
   }
