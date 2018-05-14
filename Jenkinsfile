@@ -13,9 +13,9 @@ pipeline {
         sh '/bin/bash -c "if [ -e tests/requirements.yml ]; then ansible-galaxy install -r tests/requirements.yml; fi"'
       }
     }
-    stage('Verify') {
+    stage('Lint') {
       steps {
-        sh 'ls tests'
+        sh 'ansible-lint -v ./'
       }
     }
   }
