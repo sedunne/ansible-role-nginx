@@ -3,7 +3,10 @@ pipeline {
   stages {
     stage('Test') {
       steps {
-        sh 'cd $WORKSPACE && /bin/bash tests/test.sh'
+        dir(path: '$WORKSPACE') {
+          sh '/bin/bash test/test.sh'
+        }
+
       }
     }
   }
