@@ -7,9 +7,14 @@ pipeline {
 
   }
   stages {
-    stage('Test') {
+    stage('Prep') {
       steps {
-        sh 'pwd && ls'
+        sh 'python tests/deps.py; if [ -e tests/requirements.yml ]; then ansible-galaxy install -r tests/requirements.yml; fi'
+      }
+    }
+    stage('Verify') {
+      steps {
+        sh 'ls tests'
       }
     }
   }
