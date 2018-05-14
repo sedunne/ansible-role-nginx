@@ -18,5 +18,10 @@ pipeline {
         sh 'ansible-lint -v ./'
       }
     }
+    stage('Run') {
+      steps {
+        sh 'ansible-playbook tests/test.yml'
+      }
+    }
   }
 }
