@@ -12,21 +12,9 @@
   package:
     state: "{{ nginx_package_state }}"
     name: "{{ nginx_package_name }}"
+  notify:
+    - start nginx
   tags:
     - nginx
     - nginx_install
 
-## https://github.com/ansible/ansible/issues/36585
-- name: enable nginx
-  shell: systemctl enable nginx
-  tags:
-    - nginx
-    - nginx_install
-    - skip_ansible_lint
-
-- name: start nginx
-  shell: systemctl start nginx
-  tags:
-    - nginx
-    - nginx_install
-    - skip_ansible_lint
