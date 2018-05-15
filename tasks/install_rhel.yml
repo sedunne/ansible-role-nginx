@@ -13,6 +13,7 @@
     state: "{{ nginx_package_state }}"
     name: "{{ nginx_package_name }}"
   notify:
+    - enable nginx ## https://github.com/ansible/ansible/issues/36585
     - start nginx
   tags:
     - nginx
