@@ -8,13 +8,6 @@
     - nginx
     - nginx_install
 
-## https://github.com/ansible/ansible/issues/36585
-- name: enable nginx service
-  shell: systemctl enable nginx
-  tags:
-    - nginx
-      nginx_install
-
 - name: install nginx package
   package:
     state: "{{ nginx_package_state }}"
