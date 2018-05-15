@@ -19,13 +19,12 @@ pipeline {
       }
     }
     stage('Run') {
-      agent any
-      environment {
-        ANSIBLE_ROLES_PATH = 'tests/roles'
-      }
       steps {
         sh 'ansible-playbook tests/jenkins.yml'
       }
     }
+  }
+  environment {
+    ANSIBLE_ROLES_PATH = 'tests/roles'
   }
 }
