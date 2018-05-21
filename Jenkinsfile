@@ -1,20 +1,12 @@
 pipeline {
   agent {
     docker {
-      image 'centos:7'
       args '--tmpfs /tmp --tmpfs /run --volume=/sys/fs/cgroup:/sys/fs/cgroup:ro --security-opt seccomp=unconfined'
+      image 'sedunne/docker-centos7-ansible:latest'
     }
 
   }
   stages {
-    stage('Build') {
-      steps {
-        sh 'yum makecache fast && yum -y install deltarpm epel-release initscripts && yum -y install ansible sudo which git python-pip && yum clean all'
-        sh 'pip install ansible-lint'
-        sh 'sed -i -e \'s/^\\(Defaults\\s*requiretty\\)/#--- \\1/\' /etc/sudoers'
-        sh 'echo -e \'[local]\\nlocalhost ansible_connection=local\' > /etc/ansible/hosts'
-      }
-    }
     stage('Lint') {
       steps {
         sh 'ansible-lint -v ./'
