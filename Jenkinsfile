@@ -2,6 +2,7 @@ pipeline {
   agent {
     docker {
       image 'centos:7'
+      args '--tmpfs /tmp --tmpfs /run --volume=/sys/fs/cgroup:/sys/fs/cgroup:ro --security-opt seccomp=unconfined'
     }
 
   }
